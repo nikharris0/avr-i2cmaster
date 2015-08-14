@@ -22,10 +22,6 @@
 
 
 /* TWI master state codes */
-#define TWI_STATE_START			0x08 /* START condition transmitted */
-#define TWI_STATE_REP_START 	0x10 /* repeated START condition transmitted */
-#define TWI_STATE_ARB_LOST 		0x38 /* arbitration lost */
-
 #define TWI_STATE_NO_STATE 		0xF8 /* no state info available / TWINT == 0 */
 #define TWI_STATE_BUS_ERR		0x00 /* illegal START or STOP condition */
 
