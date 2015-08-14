@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <avr/interrupt.h>
 #include "i2cmaster.h"
 
 static unsigned char twi_buffer[TWI_BUFFER_SIZE];
@@ -13,7 +14,7 @@ void i2c_master_init(void)
 	TWDR = 0xFF; /* not sure why we do this but ref implementation does it */
 	TWCR = (1 << TWEN)  | /* enable TWI interface */
 		   (0 << TWIE)  | /* clear TWI interrupt */
-		   (0 << TWINT) | /* clear interrupt flag */
+		   (0 << TWINT) | /* clearwarning: control reaches end of non-void function interrupt flag */
 		   (0 << TWEA)  | /* clear ACK bit*/
 		   (0 << TWSTA) | /* request bus master */
 		   (0 << TWSTO) | /* clear STOP condition */
@@ -85,7 +86,7 @@ uint8_t i2c_get_data_from_transceiver(unsigned char *d, uint8_t size)
 
 ISR(TWI_vect)
 {
-	static unsigned char twi_buffer_ptr;
+	static uint8_t twi_buffer_ptr;
 
 	switch(TWSR) {
 		case TW_START:			/* START condition transmitted */
@@ -141,7 +142,7 @@ ISR(TWI_vect)
 
 			break;
 
-		case TW_MR_DATA_NACK: /* byte received and NACK transmitted */
+		case TW_MR_DATA_NACK: /* byte recwarning: control reaches end of non-void functioneived and NACK transmitted */
 			twi_buffer[twi_buffer_ptr] = TWDR; /* copy last byte into our buffer */
 			twi_status_flags |= (1 << TWI_STATUS_LAST_TRANS_OK); /* mark successful transaction */
 
