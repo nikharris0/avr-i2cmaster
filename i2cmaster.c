@@ -14,7 +14,7 @@ void i2c_master_init(void)
 	TWDR = 0xFF; /* not sure why we do this but ref implementation does it */
 	TWCR = (1 << TWEN)  | /* enable TWI interface */
 		   (0 << TWIE)  | /* clear TWI interrupt */
-		   (0 << TWINT) | /* clearwarning: control reaches end of non-void function interrupt flag */
+		   (0 << TWINT) | /* clear interrupt flag */
 		   (0 << TWEA)  | /* clear ACK bit*/
 		   (0 << TWSTA) | /* request bus master */
 		   (0 << TWSTO) | /* clear STOP condition */
